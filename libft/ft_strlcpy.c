@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   file_checker.c                                     :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aperis-p <aperis-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/30 17:43:25 by aperis-p          #+#    #+#             */
-/*   Updated: 2023/08/31 20:41:31 by aperis-p         ###   ########.fr       */
+/*   Created: 2023/05/03 18:43:34 by aperis-p          #+#    #+#             */
+/*   Updated: 2023/05/23 14:54:31 by aperis-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int path_chmod_check(char *argv)
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	if(access(argv, F_OK) == 0)
+	size_t	length;
+	size_t	i;
+
+	i = 0;
+	length = ft_strlen(src);
+	if (!dst || !src)
+		return (0);
+	if (size > 0)
 	{
-		printf("File found\n");
-		if(access(argv, R_OK) == 0 && access(argv, W_OK) == 0)
+		while (src[i] && i < (size - 1))
 		{
-			printf("All rights granted\n");
-			return(1);
+			dst[i] = src[i];
+			i++;
 		}
-		else
-		{
-			perror("Error");
-			return(0);
-		}
+		dst[i] = '\0';
 	}
-	else
-		perror("Error");
-	return (0);	
+	return (length);
 }

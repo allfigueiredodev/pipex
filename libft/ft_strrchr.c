@@ -1,34 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   file_checker.c                                     :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aperis-p <aperis-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/30 17:43:25 by aperis-p          #+#    #+#             */
-/*   Updated: 2023/08/31 20:41:31 by aperis-p         ###   ########.fr       */
+/*   Created: 2023/05/02 13:58:17 by aperis-p          #+#    #+#             */
+/*   Updated: 2023/05/26 21:37:36 by aperis-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int path_chmod_check(char *argv)
+char	*ft_strrchr(const char *s, int c)
 {
-	if(access(argv, F_OK) == 0)
+	char	*ptr;
+
+	ptr = NULL;
+	if (c == '\0')
 	{
-		printf("File found\n");
-		if(access(argv, R_OK) == 0 && access(argv, W_OK) == 0)
-		{
-			printf("All rights granted\n");
-			return(1);
-		}
-		else
-		{
-			perror("Error");
-			return(0);
-		}
+		while (*s != '\0')
+			s++;
+		return ((char *)s);
 	}
 	else
-		perror("Error");
-	return (0);	
+	{
+		while (*s != '\0')
+		{
+			if (*s == (unsigned char)c)
+			{
+				ptr = (char *)s;
+			}
+			s++;
+		}
+		return (ptr);
+	}
+	return (ptr);
 }

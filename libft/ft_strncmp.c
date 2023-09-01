@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   file_checker.c                                     :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aperis-p <aperis-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/30 17:43:25 by aperis-p          #+#    #+#             */
-/*   Updated: 2023/08/31 20:41:31 by aperis-p         ###   ########.fr       */
+/*   Created: 2023/05/02 17:31:45 by aperis-p          #+#    #+#             */
+/*   Updated: 2023/05/26 18:57:06 by aperis-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int path_chmod_check(char *argv)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	if(access(argv, F_OK) == 0)
+	if (!n)
+		return (0);
+	while ((*s1 != '\0' || *s2 != '\0'))
 	{
-		printf("File found\n");
-		if(access(argv, R_OK) == 0 && access(argv, W_OK) == 0)
+		while (*s1 == *s2 && --n != 0 && *s1 && *s2)
 		{
-			printf("All rights granted\n");
-			return(1);
+			s1++;
+			s2++;
 		}
-		else
-		{
-			perror("Error");
-			return(0);
-		}
+		return (*(unsigned char *)s1 - *(unsigned char *)s2);
 	}
-	else
-		perror("Error");
-	return (0);	
+	return (0);
 }

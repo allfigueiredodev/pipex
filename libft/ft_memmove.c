@@ -1,34 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   file_checker.c                                     :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aperis-p <aperis-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/30 17:43:25 by aperis-p          #+#    #+#             */
-/*   Updated: 2023/08/31 20:41:31 by aperis-p         ###   ########.fr       */
+/*   Created: 2023/05/03 15:52:15 by aperis-p          #+#    #+#             */
+/*   Updated: 2023/05/26 17:17:00 by aperis-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int path_chmod_check(char *argv)
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	if(access(argv, F_OK) == 0)
+	unsigned char		*ptr_dest;
+	unsigned const char	*ptr_src;
+
+	ptr_dest = dest;
+	ptr_src = src;
+	if (!dest && !src)
+		return (0);
+	if (ptr_dest <= ptr_src)
 	{
-		printf("File found\n");
-		if(access(argv, R_OK) == 0 && access(argv, W_OK) == 0)
+		while (n > 0)
 		{
-			printf("All rights granted\n");
-			return(1);
-		}
-		else
-		{
-			perror("Error");
-			return(0);
+			*ptr_dest++ = *ptr_src++;
+			n--;
 		}
 	}
 	else
-		perror("Error");
-	return (0);	
+	{
+		while (n > 0)
+		{
+			ptr_dest[n - 1] = ptr_src[n - 1];
+			n--;
+		}
+	}
+	return (dest);
 }

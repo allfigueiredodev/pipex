@@ -1,34 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   file_checker.c                                     :+:      :+:    :+:   */
+/*   print_matrix.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aperis-p <aperis-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/30 17:43:25 by aperis-p          #+#    #+#             */
-/*   Updated: 2023/08/31 20:41:31 by aperis-p         ###   ########.fr       */
+/*   Created: 2023/08/24 13:53:03 by aperis-p          #+#    #+#             */
+/*   Updated: 2023/08/27 19:00:54 by aperis-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int path_chmod_check(char *argv)
+void	ft_print_matrix(char **matrix)
 {
-	if(access(argv, F_OK) == 0)
+	while (*matrix)
 	{
-		printf("File found\n");
-		if(access(argv, R_OK) == 0 && access(argv, W_OK) == 0)
-		{
-			printf("All rights granted\n");
-			return(1);
-		}
-		else
-		{
-			perror("Error");
-			return(0);
-		}
+		ft_printf("%s\n", *matrix);
+		matrix++;
 	}
-	else
-		perror("Error");
-	return (0);	
 }

@@ -11,9 +11,9 @@
 typedef struct s_fnctargs	
 {
 	char *fnct_1;
-	char *fnctargs_1;
+	char **fnctargs_1;
 	char *fnct_2;
-	char *fnctargs_2;
+	char **fnctargs_2;
 	char *fnct_path_1;
 	char *fnct_path_2;
 } t_fnctargs;

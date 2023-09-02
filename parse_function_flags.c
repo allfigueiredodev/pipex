@@ -6,7 +6,7 @@
 /*   By: aperis-p <aperis-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 15:28:08 by aperis-p          #+#    #+#             */
-/*   Updated: 2023/08/31 18:59:21 by aperis-p         ###   ########.fr       */
+/*   Updated: 2023/09/01 16:23:56 by aperis-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void parse_function_flags(char *args_1, char *args_2, t_fnctargs *fnctargs)
 	parsed_args_1 = ft_split(args_1, ' ');
 	parsed_args_2 = ft_split(args_2, ' ');
 	fnctargs->fnct_1 = parsed_args_1[0];
-	fnctargs->fnctargs_1 = args_1;
+	fnctargs->fnctargs_1 = parsed_args_1;
 	fnctargs->fnct_2 = parsed_args_2[0];
-	fnctargs->fnctargs_2 = args_2;
+	fnctargs->fnctargs_2 = parsed_args_2;
 }
 
 // int main(void)

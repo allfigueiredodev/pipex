@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "pipex.h"
-#include <string.h>
 
 void set_fnct_path(char *fnct_1, char *fnct_2, t_fnctargs *fnctargs)
 {

@@ -69,7 +69,7 @@ int main()
 
 		// Concatenate a fixed string with it
 		int k = strlen(concat_str);
-		int i;
+		size_t i;
 		for (i = 0; i < strlen(fixed_str); i++)
 			concat_str[k++] = fixed_str[i];
 

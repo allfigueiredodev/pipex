@@ -1,4 +1,1 @@
--rwxr-xr-x 1 aperis-p candidate 21496 Sep  4 21:47 pipex
--rw-r--r-- 1 aperis-p candidate  2746 Sep  4 21:47 pipex.c
--rw-r--r-- 1 aperis-p candidate   721 Sep  4 20:56 pipex.h
--rw-r--r-- 1 aperis-p candidate  5208 Sep  4 21:47 pipex.o
+see

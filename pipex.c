@@ -6,7 +6,7 @@
 /*   By: aperis-p <aperis-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:49:58 by aperis-p          #+#    #+#             */
-/*   Updated: 2023/09/04 21:48:47 by aperis-p         ###   ########.fr       */
+/*   Updated: 2023/09/05 21:56:02 by aperis-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,10 @@ int main(int argc, char **argv)
 	if(pid_1 == 0)
 	{
 		//child process 1
+		fd_1[0] = open(fnctargs.files_paths.path_file_1, O_RDONLY, 0777);
+		dup2(fd_1[0], STDIN_FILENO);
 		close(fd_1[0]);
 		dup2(fd_1[1], STDOUT_FILENO);
-		printf("teste");
 		close(fd_1[1]);
 		execve(fnctargs.fnct_path_1, fnctargs.fnctargs_1, NULL);
 	}
@@ -62,3 +63,7 @@ int main(int argc, char **argv)
 	waitpid(pid_2, NULL, 0);
 	return(0);
 }
+
+//append data to the document >>;
+//make sure pipe works with multiple pipes;
+//emulate the redirect operator <;

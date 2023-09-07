@@ -15,20 +15,19 @@ typedef struct s_file_paths
 	char *path_file_2;
 } t_file_paths;
 
-typedef struct s_fnctargs	
+typedef struct s_fctn	
 {
-	char 		*fnct_1;
-	char 		**fnctargs_1;
-	char 		*fnct_2;
-	char 		**fnctargs_2;
-	char 		*fnct_path_1;
-	char 		*fnct_path_2;
+	// char 		**fctn;
+	char 		**fctns;
+	char 		**fctn_path;
+	// int			total_pipes;
 	t_file_paths files_paths;
-} t_fnctargs;
+} t_fctn;
 
-void parse_function_flags(char *args_1, char *args_2, t_fnctargs *fnctargs);
-void set_fnct_path(char *fnct_1, char *fnct_2, t_fnctargs *fnctargs);
-int path_chmod_check(char *argv);
-void set_file_paths(char *path_1, char *path_2, t_fnctargs *fnctargs);
+void 	parse_function_flags(t_fctn *fctn, int argc);
+void 	set_fctn_data(char *fctn_1, char *fctn_2, t_fctn *fctn, int argc);
+int 	path_chmod_check(char *argv);
+void 	set_file_paths(char *path_1, char *path_2, t_fctn *fctn);
+void	argv_filter(t_fctn *fctn, char **argv, int argc)
 
 #endif

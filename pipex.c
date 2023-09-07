@@ -6,7 +6,7 @@
 /*   By: aperis-p <aperis-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:49:58 by aperis-p          #+#    #+#             */
-/*   Updated: 2023/09/05 21:56:02 by aperis-p         ###   ########.fr       */
+/*   Updated: 2023/09/07 19:30:04 by aperis-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 int main(int argc, char **argv)
 {
-	t_fnctargs fnctargs;
-	int pid_1;
-	int pid_2;
+	t_fctn fctn;
+	int pid;
 	int fd_1[2];
 	
 	if(argc < 5)
@@ -31,39 +30,46 @@ int main(int argc, char **argv)
 		perror("fd_1");
 		return(1);
 	}
-	parse_function_flags(argv[2], argv[3], &fnctargs);
-	set_fnct_path(fnctargs.fnct_1, fnctargs.fnct_2, &fnctargs);
-	set_file_paths(argv[1], argv[4], &fnctargs);
-	pid_1 = fork();
-	if(pid_1 == 0)
-	{
-		//child process 1
-		fd_1[0] = open(fnctargs.files_paths.path_file_1, O_RDONLY, 0777);
-		dup2(fd_1[0], STDIN_FILENO);
-		close(fd_1[0]);
-		dup2(fd_1[1], STDOUT_FILENO);
-		close(fd_1[1]);
-		execve(fnctargs.fnct_path_1, fnctargs.fnctargs_1, NULL);
-	}
-	pid_2 = fork();
-	if(pid_2 == 0)
-	{
-		//child process 2
-		close(fd_1[1]);
-		int temp = open(fnctargs.files_paths.path_file_2, O_WRONLY | O_TRUNC, 0777);
-		dup2(fd_1[0], STDIN_FILENO);
-		dup2(temp, STDOUT_FILENO);
-		close(fd_1[0]);
-		close(temp);
-		execve(fnctargs.fnct_path_2, fnctargs.fnctargs_2, NULL);
-	}
-	close(fd_1[0]);
-	close(fd_1[1]);
-	waitpid(pid_1, NULL, 0);
-	waitpid(pid_2, NULL, 0);
-	return(0);
+	// fctn.total_pipes = argc - 2;
+	argv_filter(&fctn, argv, argc);
+	parse_function_flags(&fctn , argc);
+	set_fctn_data(fctn.fctn_1, fctn.fctn_2, &fctn, argc);
+	set_file_paths(argv[1], argv[4], &fctn);
+	// pid = fork();
+	// if(pid == 0)
+	// {
+	// 	//child process 1
+	// 	fd_1[0] = open(fctn.files_paths.path_file_1, O_RDONLY, 0777);
+	// 	dup2(fd_1[0], STDIN_FILENO);
+	// 	close(fd_1[0]);
+	// 	dup2(fd_1[1], STDOUT_FILENO);
+	// 	close(fd_1[1]);
+	// 	execve(fctn.fctn_path_1, fctn.fctn_1, NULL);
+	// }
+	// pid = fork();
+	// if(pid == 0)
+	// {
+		
+	// }
+	// pid = fork();
+	// if(pid == 0)
+	// {
+	// 	//child process 2
+	// 	close(fd_1[1]);
+	// 	int temp = open(fctn.files_paths.path_file_2, O_WRONLY | O_TRUNC | O_CREAT, 0777);
+	// 	dup2(fd_1[0], STDIN_FILENO);
+	// 	dup2(temp, STDOUT_FILENO);
+	// 	close(fd_1[0]);
+	// 	close(temp);
+	// 	execve(fctn.fctn_path_2, fctn.fctn_2, NULL);
+	// }
+	// close(fd_1[0]);
+	// close(fd_1[1]);
+	// waitpid(pid, NULL, 0);
+	// waitpid(pid, NULL, 0);
+	// return(0);
 }
 
 //append data to the document >>;
-//make sure pipe works with multiple pipes;
-//emulate the redirect operator <;
+//make sure pipe works with multiple pipes; 
+//emulate the redirect operator <; OK

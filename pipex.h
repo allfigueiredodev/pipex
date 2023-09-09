@@ -18,16 +18,15 @@ typedef struct s_file_paths
 typedef struct s_fctn	
 {
 	// char 		**fctn;
-	char 		**fctns;
+	char 		***fctns;
 	char 		**fctn_path;
-	// int			total_pipes;
+	int			total_pipes;
 	t_file_paths files_paths;
 } t_fctn;
 
-void 	parse_function_flags(t_fctn *fctn, int argc);
 void 	set_fctn_data(char *fctn_1, char *fctn_2, t_fctn *fctn, int argc);
 int 	path_chmod_check(char *argv);
 void 	set_file_paths(char *path_1, char *path_2, t_fctn *fctn);
-void	argv_filter(t_fctn *fctn, char **argv, int argc)
+void	argv_filter(t_fctn *fctn, char **argv);
 
 #endif

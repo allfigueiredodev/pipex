@@ -12,61 +12,53 @@
 
 #include "pipex.h"
 
-static	int	ft_btw(char const *s, char c)
+static size_t	ft_del_count(char const *s, char c)
 {
-	int			counter;
+	size_t		counter;
 	char const	*ptr;
 	int			i;
 
 	ptr = s;
-	if (*(ptr + 0) == c)
-		i = 1;
-	else
-		i = 0;
 	counter = 0;
+	i = 0;
 	while (*(ptr + i))
 	{
-		if (*(ptr + i) == c)
-		{
-			return (counter);
-		}
-		counter ++;
-		i++;
+		while (*(ptr + i) == c && *(ptr + i) != '\0')
+			i++;
+		while (*(ptr + i) != c && *(ptr + i) != '\0')
+			i++;
+		if (*(ptr + i) != '\0' || *(ptr + i - 1) != c)
+			counter++;
 	}
 	return (counter);
 }
 
-void	argv_filter(t_fctn *fctn, char **argv, int argc)
+void	argv_filter(t_fctn *fctn, char **argv)
 {
 	int i;
 	int total_args;
 
 	i = 0;
-	total_args = sizeof(argv) / sizeof(argv[0]);
-	*fctn->fctns = (char**)malloc(sizeof(char**) * (total_args - 3));
-	while(i < (total_args - 3))
+	fctn->fctns = (char***)ft_calloc((fctn->total_pipes) + 1, sizeof(char***));
+	while(i < (fctn->total_pipes))
 	{
-		fctn->fctns[i] = (char *)ft_calloc((ft_btw(argv[i], " ") + 1), sizeof(char *));
+		total_args  = ft_del_count(argv[i], 32);
+		fctn->fctns[i] = ft_split(argv[i], 32);
+		fctn->fctns[i][total_args] = NULL; 
 		i++;
 	}
-	while (j > 0)
-	{
-		(*map_copy)[i] = ft_calloc((x + 1), sizeof(char));
-		gnl_strlcpy((*map_copy)[i], map[i], x + 1);
-		j--;
-		i++;
-	}
+	fctn->fctns[fctn->total_pipes] = NULL;
 }
 
 int main(void)
 {
-	t_fctn *test;
+ 	t_fctn fctn;
 	
-	char *fctns[] = {
-		"sort",
-		"ls -l",
-		"grep working",
-		"wc -l"
+	fctn.total_pipes = 3;
+ 	char *fctns[] = {
+ 		"sort",
+ 		"ls -l",
+ 		"grep working",
 	};
-	argv_filter(&test, fctns, 5);
+	argv_filter(&fctn, fctns);
 }

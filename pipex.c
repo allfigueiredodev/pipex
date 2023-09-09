@@ -30,9 +30,8 @@ int main(int argc, char **argv)
 		perror("fd_1");
 		return(1);
 	}
-	// fctn.total_pipes = argc - 2;
+	fctn.total_pipes = argc - 3;
 	argv_filter(&fctn, argv, argc);
-	parse_function_flags(&fctn , argc);
 	set_fctn_data(fctn.fctn_1, fctn.fctn_2, &fctn, argc);
 	set_file_paths(argv[1], argv[4], &fctn);
 	// pid = fork();

@@ -12,10 +12,10 @@
 
 # include "pipex.h"
 
-void set_file_paths(char *path_1, char *path_2, t_fctn *fctn)
+void set_file_paths(char *path_input, char *path_output, t_fctn *fctn)
 {
-	fctn->files_paths.path_file_1 = (char *)malloc(sizeof(char) * (ft_strlen(path_1) + 1));
-	fctn->files_paths.path_file_2 = (char *)malloc(sizeof(char) * (ft_strlen(path_2) + 1));
-	ft_strlcpy(fctn->files_paths.path_file_1, path_1, (ft_strlen(path_1) + 1));
-	ft_strlcpy(fctn->files_paths.path_file_2, path_2, (ft_strlen(path_2) + 1));
+	fctn->files_paths.path_input_file = (char *)malloc(sizeof(char) * (ft_strlen(path_input) + 1));
+	fctn->files_paths.path_output_file = (char *)malloc(sizeof(char) * (ft_strlen(path_output) + 1));
+	ft_strlcpy(fctn->files_paths.path_input_file, path_input, (ft_strlen(path_input) + 1));
+	ft_strlcpy(fctn->files_paths.path_output_file, path_output, (ft_strlen(path_output) + 1));
 }

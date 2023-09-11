@@ -9,10 +9,12 @@
 #include "./libft/libft.h"
 #include <errno.h>
 
+# define BIN_PATH "/usr/bin/"
+
 typedef struct s_file_paths
 {
-	char *path_file_1;
-	char *path_file_2;
+	char *path_input_file;
+	char *path_output_file;
 } t_file_paths;
 
 typedef struct s_fctn	
@@ -24,9 +26,11 @@ typedef struct s_fctn
 	t_file_paths files_paths;
 } t_fctn;
 
-void 	set_fctn_data(char *fctn_1, char *fctn_2, t_fctn *fctn, int argc);
+void 	set_fctn_data(t_fctn *fctn);
 int 	path_chmod_check(char *argv);
 void 	set_file_paths(char *path_1, char *path_2, t_fctn *fctn);
 void	argv_filter(t_fctn *fctn, char **argv);
+void 	close_unused_fds(int (* fds)[2], int pid, int total_fds);
+void close_all_fds(int (* fds)[2], int total_fds);
 
 #endif

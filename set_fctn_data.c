@@ -12,11 +12,35 @@
 
 #include "pipex.h"
 
-void set_fctn_data(char *fctn, int argc)
+void set_fctn_data(t_fctn *fctn)
 {
-	char path[10] = "/usr/bin/";
+	int i;
 
-	fctn->fctn_path_1 = (char *)malloc(sizeof(char) * (ft_strlen(path) + ft_strlen(fctn_1) + 1));
-	ft_strlcpy(fctn->fctn_path_1, "/usr/bin/", 10);
-	ft_strlcat(fctn->fctn_path_1, fctn_1, (ft_strlen(path) + ft_strlen(fctn_1) + 1));
+	i = 0;
+	fctn->fctn_path = (char **)ft_calloc(fctn->total_pipes + 1, sizeof(char **));
+	while(i < fctn->total_pipes)
+	{
+		fctn->fctn_path[i] = (char *)malloc(sizeof(char) * (ft_strlen(BIN_PATH) + ft_strlen(fctn->fctns[i][0]) + 1));
+		ft_strlcpy(fctn->fctn_path[i], BIN_PATH, 10);
+		ft_strlcat(fctn->fctn_path[i], fctn->fctns[i][0], (ft_strlen(BIN_PATH)) + ft_strlen(fctn->fctns[i][0]) + 1);
+		i++;
+	}
+	fctn->fctn_path[i] = NULL;
 }
+
+// int main(void)
+// {
+// 	t_fctn fctn;
+
+// 	char *fctns[] = {
+//  		"./a.out",
+// 		"./lista1",
+// 		"sort",
+//  		"ls -l",
+//  		"grep working",
+// 		"./lista2"
+// 	};
+// 	fctn.total_pipes = 3;
+// 	argv_filter(&fctn, fctns);
+// 	set_fctn_data(&fctn);
+// }

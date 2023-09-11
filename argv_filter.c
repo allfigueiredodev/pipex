@@ -36,29 +36,35 @@ static size_t	ft_del_count(char const *s, char c)
 void	argv_filter(t_fctn *fctn, char **argv)
 {
 	int i;
+	int j;
 	int total_args;
 
 	i = 0;
+	j = 2;
 	fctn->fctns = (char***)ft_calloc((fctn->total_pipes) + 1, sizeof(char***));
 	while(i < (fctn->total_pipes))
 	{
-		total_args  = ft_del_count(argv[i], 32);
-		fctn->fctns[i] = ft_split(argv[i], 32);
-		fctn->fctns[i][total_args] = NULL; 
+		total_args  = ft_del_count(argv[j], 32);
+		fctn->fctns[i] = ft_split(argv[j], 32);
+		fctn->fctns[i][total_args] = NULL;
 		i++;
+		j++;
 	}
 	fctn->fctns[fctn->total_pipes] = NULL;
 }
 
-int main(void)
-{
- 	t_fctn fctn;
+// int main(void)
+// {
+//  	t_fctn fctn;
 	
-	fctn.total_pipes = 3;
- 	char *fctns[] = {
- 		"sort",
- 		"ls -l",
- 		"grep working",
-	};
-	argv_filter(&fctn, fctns);
-}
+// 	fctn.total_pipes = 3;
+//  	char *fctns[] = {
+//  		"./a.out",
+// 		"./lista1",
+// 		"sort",
+//  		"ls -l",
+//  		"grep working",
+// 		"./lista2"
+// 	};
+// 	argv_filter(&fctn, fctns);
+// }

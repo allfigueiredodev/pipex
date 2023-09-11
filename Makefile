@@ -5,12 +5,12 @@ LIBFT_LIB = $(LIBFT_PATH)/libft.a
 MAKE = make
 CC = cc
 FLAGS = -Wall -Werror -Wextra -g3
-SRC = pipex.c file_checker.c parse_function_flags.c set_fctn_data.c set_file_paths.c
+SRC = pipex.c close_fds.c argv_filter.c file_checker.c set_fctn_data.c set_file_paths.c
 
 OBJS = $(SRC:.c=.o)
 
 all: $(NAME)
-	# cc $(SRC) -Wall -Werror -Wextra -g3 && ./pipex ./file_1.txt "ls -la" "grep pipex" ./file_2.txt
+	# cc $(SRC) -Wall -Werror -Wextra -g3 -I ./ && ./pipex ./file_1.txt "sort" "grep pipex" "wc -l" ./file_2.txt
 
 $(LIBFT_LIB):
 	@make -C $(LIBFT_PATH)

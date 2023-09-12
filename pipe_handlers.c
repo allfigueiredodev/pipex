@@ -6,47 +6,48 @@
 /*   By: aperis-p <aperis-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 16:59:20 by aperis-p          #+#    #+#             */
-/*   Updated: 2023/09/11 21:58:12 by aperis-p         ###   ########.fr       */
+/*   Updated: 2023/09/12 17:31:24 by aperis-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 	#include "pipex.h"
 	
 	void stdin_pipe(t_fctn *fctn)
-	{		
-		{
-			close_unused_fds(fctn->fd, 1, fctn->total_pipes + 1);
-			fctn->fd[0][0] = open(fctn->files_paths.path_input_file, O_RDONLY, 0777);
-			dup2(fctn->fd[0][0], STDIN_FILENO);
-			close(fctn->fd[0][0]);
-			dup2(fctn->fd[1][1], STDOUT_FILENO);
-			close(fctn->fd[1][1]);
-			execve(fctn->fctn_path[0], fctn->fctns[0], NULL);
-		}	
+	{
+		close_unused_fds(fctn->fd, 1, fctn->total_pipes + 1);
+		fctn->fd[0][0] = open(fctn->files_paths.path_input_file, O_RDONLY, 0777);
+		dup2(fctn->fd[0][0], STDIN_FILENO);
+		close(fctn->fd[0][0]);
+		dup2(fctn->fd[1][1], STDOUT_FILENO);
+		close(fctn->fd[1][1]);
+		fprintf(stderr, "stdin pipe\n");
+		execve(fctn->fctn_path[0], fctn->fctns[0], NULL);
 	}
 
 	void middle_pipes(t_fctn *fctn, int pid, int index)
 	{
 		if(pid == 0)
-		{
+		{			
 			close_unused_fds(fctn->fd, pid, fctn->total_pipes + 1);
 			dup2(fctn->fd[index - 1][0], STDIN_FILENO);
 			close(fctn->fd[index - 1][0]);
 			dup2(fctn->fd[index][1], STDOUT_FILENO);
+			fprintf(stderr, "middle pipe\n");
 			execve(fctn->fctn_path[index - 1], fctn->fctns[index - 1], NULL);
 		}		
 	}
 	
 	void stdout_pipe(t_fctn *fctn, int pid)
 	{
-	if(pid == 0)
-	{
-		close_unused_fds(fctn->fd, pid, fctn->total_pipes + 1);
-		fctn->fd[fctn->total_pipes][1] = open(fctn->files_paths.path_output_file, O_WRONLY | O_TRUNC | O_CREAT, 0777);
-		dup2(fctn->fd[fctn->total_pipes - 1][0], STDIN_FILENO);
-		close(fctn->fd[fctn->total_pipes - 1][0]);
-		dup2(fctn->fd[fctn->total_pipes][1], STDOUT_FILENO);
-		close(fctn->fd[fctn->total_pipes][1]);
-		execve(fctn->fctn_path[fctn->total_pipes - 1], fctn->fctns[fctn->total_pipes - 1], NULL);
-	}
+		if(pid == 0)
+		{
+			close_unused_fds(fctn->fd, pid, fctn->total_pipes + 1);
+			fctn->fd[fctn->total_pipes][1] = open(fctn->files_paths.path_output_file, O_WRONLY | O_TRUNC | O_CREAT, 0777);
+			dup2(fctn->fd[fctn->total_pipes - 1][0], STDIN_FILENO);
+			close(fctn->fd[fctn->total_pipes - 1][0]);
+			dup2(fctn->fd[fctn->total_pipes][1], STDOUT_FILENO);
+			close(fctn->fd[fctn->total_pipes][1]);
+			fprintf(stderr, "stdout pipe\n");
+			execve(fctn->fctn_path[fctn->total_pipes - 1], fctn->fctns[fctn->total_pipes - 1], NULL);
+		}
 	}

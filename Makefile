@@ -5,7 +5,7 @@ LIBFT_LIB = $(LIBFT_PATH)/libft.a
 MAKE = make
 CC = cc
 FLAGS = -Wall -Werror -Wextra -g3
-SRC = pipex.c pipe_handlers.c close_fds.c argv_filter.c file_checker.c set_fctn_data.c set_file_paths.c
+SRC = pipex.c pipe_handlers.c fork_manager.c set_fds.c close_fds.c argv_filter.c file_checker.c set_fctn_data.c set_file_paths.c
 
 OBJS = $(SRC:.c=.o)
 

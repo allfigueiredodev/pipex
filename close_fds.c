@@ -12,7 +12,7 @@ void close_unused_fds(int (* fds)[2], int pid, int total_fds)
 		if(fds[i][j] != fds[pid - 1][j])
 		{
 			close(fds[i][j]);
-			printf("closed: fd[%d][%d]\n", i, j);
+			// printf("closed: fd[%d][%d]\n", i, j);
 		}
 		i++;
 	}
@@ -23,7 +23,7 @@ void close_unused_fds(int (* fds)[2], int pid, int total_fds)
 		if(fds[i][j] != fds[pid][j])
 		{
 			close(fds[i][j]);
-			printf("closed: fd[%d][%d]\n", i, j);
+			// printf("closed: fd[%d][%d]\n", i, j);
 		}
 		i++;	
 	}

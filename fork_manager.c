@@ -6,7 +6,7 @@
 /*   By: aperis-p <aperis-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 18:42:29 by aperis-p          #+#    #+#             */
-/*   Updated: 2023/09/12 17:37:30 by aperis-p         ###   ########.fr       */
+/*   Updated: 2023/09/12 21:53:58 by aperis-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,19 @@
 
 void fork_manager(t_fctn *fctn)
 {
-	int i;
-	
-	i = 1;
-	stdin_pipe(fctn);
-	i++;
-	fctn->pid[i][0] = fork();
-	while(i < fctn->total_pipes - 1)
-	{	
-		middle_pipes(fctn, fctn->pid[i][0], i);
-		i++;
+	if(fctn->index == 1)
+	{
+		// fprintf(stderr, "stdin\n");
+		stdin_pipe(fctn);
 	}
-	fctn->pid[i][0] = fork();
-	stdout_pipe(fctn, fctn->pid[i][0]);
+	else if(fctn->index > 1 && fctn->index < fctn->total_pipes)
+	{
+		// fprintf(stderr, "middle_pipes\n");	
+		middle_pipes(fctn, fctn->index);
+	}
+	else if(fctn->index == fctn->total_pipes)
+	{
+		// fprintf(stderr, "stdout\n");
+		stdout_pipe(fctn);
+	}
 }

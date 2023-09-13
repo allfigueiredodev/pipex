@@ -19,6 +19,7 @@ typedef struct s_file_paths
 
 typedef struct s_fctn	
 {
+	int 		index;
 	char 		***fctns;
 	char 		**fctn_path;
 	int			total_pipes;
@@ -34,8 +35,8 @@ void	argv_filter(t_fctn *fctn, char **argv);
 void 	close_unused_fds(int (* fds)[2], int pid, int total_fds);
 void	close_all_fds(int (* fds)[2], int total_fds);
 void 	stdin_pipe(t_fctn *fctn);
-void 	middle_pipes(t_fctn *fctn, int pid, int index);
-void 	stdout_pipe(t_fctn *fctn, int pid);
+void 	middle_pipes(t_fctn *fctn, int index);
+void 	stdout_pipe(t_fctn *fctn);
 void 	set_fds(t_fctn *fctn);
 void 	fork_manager(t_fctn *fctn);
 

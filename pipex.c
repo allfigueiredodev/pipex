@@ -6,7 +6,7 @@
 /*   By: aperis-p <aperis-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:49:58 by aperis-p          #+#    #+#             */
-/*   Updated: 2023/09/12 17:20:21 by aperis-p         ###   ########.fr       */
+/*   Updated: 2023/09/12 22:01:27 by aperis-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,24 @@ int main(int argc, char **argv)
 	if(!path_chmod_check(argv[1]))
 		return(0);
 	fctn.total_pipes = argc - 3;
+	fctn.index = 1;
 	set_fds(&fctn);
 	argv_filter(&fctn, argv);
 	set_fctn_data(&fctn);
 	set_file_paths(argv[1], argv[argc - 1], &fctn);
-	fctn.pid[1][0] = fork();
-	if(fctn.pid[1][0] == 0)
-		fork_manager(&fctn);
-	// fork_manager(&fctn);
-	wait(NULL);
+	while(fctn.index <= fctn.total_pipes)
+	{
+		fctn.pid[fctn.index][0] = fork();
+		if(fctn.pid[fctn.index][0] == 0)
+		{
+			printf("actual index: %d\n", fctn.index);
+			fork_manager(&fctn);
+		}
+		printf("pid: %d\n", fctn.pid[fctn.index][0]);
+		waitpid(fctn.pid[fctn.index][0], NULL, 0);
+		fctn.index++;
+	}
 	close_all_fds(fctn.fd, fctn.total_pipes + 1);
-	// waitpid(fctn.pid[1][0], NULL, 0);
 	return(0);
 }
 

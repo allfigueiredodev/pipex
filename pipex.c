@@ -19,7 +19,7 @@ int main(int argc, char **argv)
 	if(argc < 5)
 	{
 		printf("Not enough arguments\n");
-		return (0);
+		exit(0);
 	}
 	if(!chmod_check(argc, argv))
 		exit(0);

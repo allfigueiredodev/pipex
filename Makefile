@@ -28,6 +28,8 @@ valgrind: all
 	# valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes \
 	#  --trace-children=yes -s -q ./pipex ./file_1.txt "cat" "" ./file_2.txt
 
+# bonus: all
+
 clean:
 	rm -rf $(OBJS)
 	$(LIBFT_MAKE) clean

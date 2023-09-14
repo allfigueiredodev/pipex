@@ -19,11 +19,12 @@ int env_path_check(t_fctn *fctn)
 	i = 0;
 	while(fctn->fctn_path[i])
 	{
-		if(access(fctn->fctn_path[i], F_OK) == 0)
+		if(access(fctn->fctn_path[i], F_OK) == 0 && access(fctn->fctn_path[i], X_OK) == 0)
 			i++;
-		else if(access(fctn->fctn_path[i], F_OK) < 0)
+		else if(access(fctn->fctn_path[i], F_OK) < 0 || access(fctn->fctn_path[i], X_OK) < 0)
 		{
-			perror("Error");			
+			ft_putstr_fd(fctn->fctns[i][0], 2);
+			ft_putstr_fd(": command no fount\n", 2);
 			free_all_data(fctn);
 			return(0);
 		}

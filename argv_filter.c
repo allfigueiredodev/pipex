@@ -6,7 +6,7 @@
 /*   By: aperis-p <aperis-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 18:55:44 by aperis-p          #+#    #+#             */
-/*   Updated: 2023/09/07 20:02:44 by aperis-p         ###   ########.fr       */
+/*   Updated: 2023/09/13 18:55:23 by aperis-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	argv_filter(t_fctn *fctn, char **argv)
 // 		"sort",
 //  		"ls -l",
 //  		"grep working",
-// 		"./lista2"
 // 	};
 // 	argv_filter(&fctn, fctns);
+// 	free_args(&fctn);
 // }

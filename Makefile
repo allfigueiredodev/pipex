@@ -5,7 +5,9 @@ LIBFT_LIB = $(LIBFT_PATH)/libft.a
 MAKE = make
 CC = cc
 FLAGS = -Wall -Werror -Wextra -g3
-SRC = pipex.c pipe_handlers.c fork_manager.c set_fds.c close_fds.c argv_filter.c file_checker.c set_fctn_data.c set_file_paths.c
+SRC = pipex.c pipe_handlers.c fork_manager.c \
+set_fds.c close_fds.c argv_filter.c file_checker.c\
+set_fctn_data.c set_file_paths.c frees.c
 
 OBJS = $(SRC:.c=.o)
 
@@ -22,7 +24,9 @@ $(NAME): $(LIBFT_LIB) $(OBJS)
 	$(CC) $(FLAGS) -c $< -o $(<:.c=.o) -I ./
 
 valgrind: all
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./pipex
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes -s -q ./pipex ./file_1.txt "sort" "grep pipex" "wc -l" ./file_2.txt
+	# valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes \
+	#  --trace-children=yes -s -q ./pipex ./file_1.txt "cat" "" ./file_2.txt
 
 clean:
 	rm -rf $(OBJS)

@@ -6,30 +6,11 @@
 /*   By: aperis-p <aperis-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:43:25 by aperis-p          #+#    #+#             */
-/*   Updated: 2023/09/14 00:36:14 by aperis-p         ###   ########.fr       */
+/*   Updated: 2023/09/14 17:18:29 by aperis-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-int env_path_check(t_fctn *fctn)
-{
-	int i;
-
-	i = 0;
-	while(fctn->fctn_path[i])
-	{
-		if(access(fctn->fctn_path[i], F_OK) == 0)
-			i++;
-		else if(access(fctn->fctn_path[i], F_OK) < 0)
-		{
-			perror("Error");			
-			free_all_data(fctn);
-			return(0);
-		}
-	}
-	return(1);
-}
 
 int chmod_check_file_a(char **argv)
 {

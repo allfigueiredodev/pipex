@@ -24,7 +24,7 @@ $(NAME): $(LIBFT_LIB) $(OBJS)
 	$(CC) $(FLAGS) -c $< -o $(<:.c=.o) -I ./
 
 valgrind: all
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes -s -q ./pipex ./file_1.txt "sort" "grep pipex" "wc -l" ./file_2.txt
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./pipex ./file_1.txt "sort" "grep pipex" "wc -l" ./file_2.txt
 	# valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes \
 	#  --trace-children=yes -s -q ./pipex ./file_1.txt "cat" "" ./file_2.txt
 

@@ -9,8 +9,6 @@
 #include "./libft/libft.h"
 #include <errno.h>
 
-# define BIN_PATH "/usr/bin/"
-
 typedef struct s_file_paths
 {
 	char *path_input_file;
@@ -28,7 +26,7 @@ typedef struct s_fctn
 	int			pid[1024][1];
 } t_fctn;
 
-int 	set_fctn_data(t_fctn *fctn);
+char	**set_fctn_data(char *fctn, char **envp);
 void 	set_file_paths(char *path_1, char *path_2, t_fctn *fctn);
 void	argv_filter(t_fctn *fctn, char **argv);
 void 	close_unused_fds(int (* fds)[2], int pid, int total_fds);
@@ -42,9 +40,11 @@ void 	free_args(t_fctn *fctn);
 void 	free_fctn_data(t_fctn *fctn);
 void 	free_file_paths(t_fctn *fctn);
 void 	free_all_data(t_fctn *fctn);
-int 	env_path_check(t_fctn *fctn);
 int 	chmod_check(int argc, char **argv);
 int 	chmod_check_file_a(char **argv);
 int 	chmod_check_file_b(int argc, char **argv);
+void 	env_path_validator(t_fctn *fctn, char **envp);
+void 	fctn_path_validator(t_fctn *fctn, char **envp);
+char 	*right_access(char **all_possible_paths);
 
 #endif

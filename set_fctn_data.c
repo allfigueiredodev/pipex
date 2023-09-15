@@ -16,7 +16,6 @@ char *right_access(char **all_possible_paths)
 {
 	int i;
 	int j;
-	char *temp;
 	
 	i = 0;
 	j = 1;
@@ -25,23 +24,23 @@ char *right_access(char **all_possible_paths)
 		if(access(all_possible_paths[i], F_OK) == 0 
 		&& access(all_possible_paths[i], X_OK) == 0)
 		{
-			temp = all_possible_paths[i];
 			while(all_possible_paths[i + j])
 			{
 				free(all_possible_paths[i + j]);
+				all_possible_paths[i + j] = NULL;
 				j++;
 			}
-			free(all_possible_paths[i]);
-			free(all_possible_paths);
-			return(temp);
+			return(all_possible_paths[i]);
 		}
 		else
 		{
 			free(all_possible_paths[i]);
+			all_possible_paths[i] = NULL;
 			i++;
 		}
 	}
 	free(all_possible_paths);
+	all_possible_paths = NULL;
 	return(NULL);
 }
 
@@ -112,21 +111,22 @@ void env_path_validator(t_fctn *fctn, char **envp)
 	}
 }
 
-// int main(int argc, char **argv, char **envp)
-// {
-// 	(void)argc;
-// 	(void)argv;
-// 	t_fctn fctn;
-// 	fctn.total_pipes = 3;
-// 	char *arr[] = {"./pipex", "./file_1", "sort", "grep pipex", "wc -l", "./file_2"};
-// 	argv_filter(&fctn, arr);	
-// 	env_path_validator(&fctn, envp);
-// 	while(fctn.fctn_path)
-// 	{
-// 		printf("%s\n", *fctn.fctn_path);
-// 		fctn.fctn_path++;
-// 	}
-// }
+int main(int argc, char **argv, char **envp)
+{
+	(void)argc;
+	(void)argv;
+	t_fctn fctn;
+	fctn.total_pipes = 3;
+	char *arr[] = {"./pipex", "./file_1", "sort", "grep pipex", "wc -l", "./file_2"};
+	argv_filter(&fctn, arr);	
+	env_path_validator(&fctn, envp);
+	while(*fctn.fctn_path)
+	{
+		printf("%s\n", *fctn.fctn_path);
+		fctn.fctn_path++;
+	}
+	free_all_data(&fctn);
+}
 
 // int main(void)
 // {

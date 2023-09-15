@@ -23,12 +23,12 @@ void free_fctn_data(t_fctn *fctn)
 	int i;
 
 	i = 0;
-	while(fctn->fctn_path[i])
+	while(!fctn->fctn_path[i])
 	{
-		free(fctn->fctn_path[i]);
 		i++;
 	}
-	free(fctn->fctn_path);
+	free(fctn->fctn_path[i]);
+	// free(fctn->fctn_path);
 }
 
 void free_args(t_fctn *fctn)

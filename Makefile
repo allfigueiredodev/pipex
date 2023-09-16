@@ -27,6 +27,8 @@ valgrind: all
 
 bonus: all
 
+# bonus: all
+
 clean:
 	rm -rf $(OBJS)
 	$(LIBFT_MAKE) clean

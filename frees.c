@@ -6,41 +6,54 @@
 /*   By: aperis-p <aperis-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 17:04:18 by aperis-p          #+#    #+#             */
-/*   Updated: 2023/09/15 01:17:33 by aperis-p         ###   ########.fr       */
+/*   Updated: 2023/09/16 00:55:00 by aperis-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void free_file_paths(t_fctn *fctn)
+void	free_file_paths(t_fctn *fctn)
 {
 	free(fctn->files_paths.path_input_file);
 	free(fctn->files_paths.path_output_file);
 }
 
-void free_fctn_data(t_fctn *fctn)
+void	free_fctn_data(t_fctn *fctn)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(!fctn->fctn_path[i])
+	while (fctn->fctn_path[i])
 	{
+		free(fctn->fctn_path[i]);
 		i++;
 	}
-	free(fctn->fctn_path[i]);
-	// free(fctn->fctn_path);
+	free(fctn->fctn_path);
 }
 
-void free_args(t_fctn *fctn)
+void	free_envps_array(char **envps)
 {
-	int i;
-	int j;
+	int	i;
+
+	i = 0;
+	while (envps[i])
+	{
+		free(envps[i]);
+		i++;
+	}
+	free(envps);
+}
+
+void	free_args(t_fctn *fctn)
+{
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
-	while(fctn->fctns[i])
+	while (fctn->fctns[i])
 	{
-		while(fctn->fctns[i][j])
+		while (fctn->fctns[i][j])
 		{
 			free(fctn->fctns[i][j]);
 			j++;
@@ -50,10 +63,10 @@ void free_args(t_fctn *fctn)
 		i++;
 		j = 0;
 	}
-	free(fctn->fctns);	
+	free(fctn->fctns);
 }
 
-void free_all_data(t_fctn *fctn)
+void	free_all_data(t_fctn *fctn)
 {
 	free_args(fctn);
 	free_fctn_data(fctn);

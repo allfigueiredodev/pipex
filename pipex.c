@@ -6,7 +6,7 @@
 /*   By: aperis-p <aperis-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:49:58 by aperis-p          #+#    #+#             */
-/*   Updated: 2023/09/16 01:24:55 by aperis-p         ###   ########.fr       */
+/*   Updated: 2023/09/16 05:57:32 by aperis-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,12 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc < 5)
 	{
-		printf("Not enough arguments\n");
+		ft_printf("Not enough arguments\n");
 		return (0);
 	}
 	if (!chmod_check(argc, argv))
 		exit(0);
-	fctn.total_pipes = argc - 3;
-	fctn.index = 1;
+	set_basic_info(&fctn, argc);
 	set_fds(&fctn);
 	argv_filter(&fctn, argv);
 	env_path_validator(&fctn, envp);

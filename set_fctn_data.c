@@ -6,7 +6,7 @@
 /*   By: aperis-p <aperis-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 18:09:58 by aperis-p          #+#    #+#             */
-/*   Updated: 2023/09/16 01:43:23 by aperis-p         ###   ########.fr       */
+/*   Updated: 2023/09/16 04:43:17 by aperis-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ char	**set_fctn_data(char *fct, char **envp)
 	char	*env_path;
 	char	**all_possible_paths;
 	int		i;
-	// char	*temp;
 
 	all_possible_paths = NULL;
 	i = 0;
@@ -53,12 +52,8 @@ char	**set_fctn_data(char *fct, char **envp)
 			all_possible_paths = ft_split(env_path, ':');
 			while (all_possible_paths[i])
 			{
-				// temp = all_possible_paths[i];
 				all_possible_paths[i] = gnl_strjoin(all_possible_paths[i], "/");
-				// free(temp);
-				// temp = all_possible_paths[i];
 				all_possible_paths[i] = gnl_strjoin(all_possible_paths[i], fct);
-				// free(temp);
 				i++;
 			}
 			free(env_path);
@@ -86,6 +81,9 @@ void	fctn_path_validator(t_fctn *fctn, char **envp)
 			ft_putstr_fd("command not found: ", 2);
 			ft_putstr_fd(fctn->fctns[i][0], 2);
 			ft_putstr_fd("\n", 2);
+			free_args(fctn);
+			free_fctn_data(fctn);
+			close_all_fds(fctn->fd, fctn->total_pipes + 1);
 			exit(1);
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: aperis-p <aperis-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 01:06:44 by aperis-p          #+#    #+#             */
-/*   Updated: 2023/09/16 01:13:02 by aperis-p         ###   ########.fr       */
+/*   Updated: 2023/09/16 05:58:05 by aperis-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 # define PIPEX_H
 
 # include <unistd.h>
-# include <stdio.h>
 # include <stdlib.h>
-# include <string.h>
 # include <sys/wait.h>
 # include "./libft/libft.h"
 # include <errno.h>
@@ -59,5 +57,6 @@ void	env_path_validator(t_fctn *fctn, char **envp);
 void	fctn_path_validator(t_fctn *fctn, char **envp);
 char	*right_access(char **all_possible_paths);
 void	free_envps_array(char **envps);
+void	set_basic_info(t_fctn *fctn, int argc);
 
 #endif

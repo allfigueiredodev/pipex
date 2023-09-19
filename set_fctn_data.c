@@ -6,46 +6,91 @@
 /*   By: aperis-p <aperis-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 18:09:58 by aperis-p          #+#    #+#             */
-/*   Updated: 2023/09/13 23:13:05 by aperis-p         ###   ########.fr       */
+/*   Updated: 2023/09/16 04:43:17 by aperis-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int set_fctn_data(t_fctn *fctn)
+char	*right_access(char **all_possible_paths)
 {
-	int i;
+	int		i;
+	char	*temp;
 
 	i = 0;
-	fctn->fctn_path = (char **)ft_calloc(fctn->total_pipes + 1, sizeof(char **));
-	while(i < fctn->total_pipes)
+	while (all_possible_paths[i])
 	{
-		fctn->fctn_path[i] = (char *)malloc(sizeof(char) * (ft_strlen(BIN_PATH) + ft_strlen(fctn->fctns[i][0]) + 1));
-		ft_strlcpy(fctn->fctn_path[i], BIN_PATH, 10);
-		ft_strlcat(fctn->fctn_path[i], fctn->fctns[i][0], (ft_strlen(BIN_PATH)) + ft_strlen(fctn->fctns[i][0]) + 1);
-		i++;
+		if (access(all_possible_paths[i], F_OK) == 0
+			&& access(all_possible_paths[i], X_OK) == 0)
+		{			
+			temp = ft_strdup(all_possible_paths[i]);
+			free_envps_array(all_possible_paths);
+			return (temp);
+		}
+		else
+		{
+			i++;
+		}
 	}
-	fctn->fctn_path[i] = NULL;
-	if(!env_path_check(fctn))
-		return(0);
-	return(1);
+	free_envps_array(all_possible_paths);
+	return (NULL);
 }
 
-// int main(void)
-// {
-// 	t_fctn fctn;
+char	**set_fctn_data(char *fct, char **envp)
+{
+	char	*env_path;
+	char	**all_possible_paths;
+	int		i;
 
-// 	char *fctns[] = {
-//  		"./a.out",
-// 		"./lista1",
-// 		"sort",
-//  		"ls -l",
-//  		"grep working",
-// 		"./lista2"
-// 	};
-// 	fctn.total_pipes = 3;
-// 	argv_filter(&fctn, fctns);
-// 	set_fctn_data(&fctn);
-// 	free_args(&fctn);
-// 	free_fctn_data(&fctn);
-// }
+	all_possible_paths = NULL;
+	i = 0;
+	while (*envp)
+	{
+		if (ft_strnstr(*envp, "PATH=", 5))
+		{
+			env_path = ft_strtrim(ft_strnstr(*envp, "PATH=", 5), "PATH=");
+			all_possible_paths = ft_split(env_path, ':');
+			while (all_possible_paths[i])
+			{
+				all_possible_paths[i] = gnl_strjoin(all_possible_paths[i], "/");
+				all_possible_paths[i] = gnl_strjoin(all_possible_paths[i], fct);
+				i++;
+			}
+			free(env_path);
+			return (all_possible_paths);
+		}
+		envp++;
+	}
+	return (all_possible_paths);
+}
+
+void	fctn_path_validator(t_fctn *fctn, char **envp)
+{
+	int	i;
+
+	i = 0;
+	fctn->fctn_path = (char **)ft_calloc(fctn->total_pipes + 1, sizeof(char *));
+	fctn->fctn_path[fctn->total_pipes] = NULL;
+	i = 0;
+	while (fctn->fctns[i])
+	{
+		fctn->fctn_path[i] = right_access(
+				set_fctn_data(fctn->fctns[i][0], envp));
+		if (fctn->fctn_path[i] == NULL)
+		{
+			ft_putstr_fd("command not found: ", 2);
+			ft_putstr_fd(fctn->fctns[i][0], 2);
+			ft_putstr_fd("\n", 2);
+			free_args(fctn);
+			free_fctn_data(fctn);
+			close_all_fds(fctn->fd, fctn->total_pipes + 1);
+			exit(1);
+		}
+		i++;
+	}
+}
+
+void	env_path_validator(t_fctn *fctn, char **envp)
+{
+	fctn_path_validator(fctn, envp);
+}

@@ -6,7 +6,7 @@
 /*   By: aperis-p <aperis-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 18:55:44 by aperis-p          #+#    #+#             */
-/*   Updated: 2023/09/13 18:55:23 by aperis-p         ###   ########.fr       */
+/*   Updated: 2023/09/16 01:38:43 by aperis-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,17 @@ static size_t	ft_del_count(char const *s, char c)
 
 void	argv_filter(t_fctn *fctn, char **argv)
 {
-	int i;
-	int j;
-	int total_args;
+	int	i;
+	int	j;
+	int	total_args;
 
 	i = 0;
 	j = 2;
-	fctn->fctns = (char***)ft_calloc((fctn->total_pipes) + 1, sizeof(char***));
-	while(i < (fctn->total_pipes))
+	fctn->fctns = (char ***)
+		ft_calloc((fctn->total_pipes) + 1, sizeof(char ***));
+	while (i < (fctn->total_pipes))
 	{
-		total_args  = ft_del_count(argv[j], 32);
+		total_args = ft_del_count(argv[j], 32);
 		fctn->fctns[i] = ft_split(argv[j], 32);
 		fctn->fctns[i][total_args] = NULL;
 		i++;
@@ -52,19 +53,3 @@ void	argv_filter(t_fctn *fctn, char **argv)
 	}
 	fctn->fctns[fctn->total_pipes] = NULL;
 }
-
-// int main(void)
-// {
-//  	t_fctn fctn;
-	
-// 	fctn.total_pipes = 3;
-//  	char *fctns[] = {
-//  		"./a.out",
-// 		"./lista1",
-// 		"sort",
-//  		"ls -l",
-//  		"grep working",
-// 	};
-// 	argv_filter(&fctn, fctns);
-// 	free_args(&fctn);
-// }

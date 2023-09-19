@@ -7,13 +7,12 @@ CC = cc
 FLAGS = -Wall -Werror -Wextra -g3
 SRC = pipex.c pipe_handlers.c fork_manager.c \
 set_fds.c close_fds.c argv_filter.c file_checker.c\
-set_fctn_data.c set_file_paths.c frees.c
+set_fctn_data.c set_file_paths.c frees.c set_basic_info.c
 
 OBJS = $(SRC:.c=.o)
 
 all: $(NAME)
-	# cc $(SRC) -Wall -Werror -Wextra -g3 -I ./ && ./pipex ./file_1.txt "sort" "grep pipex" "wc -l" ./file_2.txt
-
+	
 $(LIBFT_LIB):
 	@make -C $(LIBFT_PATH)
 
@@ -24,9 +23,9 @@ $(NAME): $(LIBFT_LIB) $(OBJS)
 	$(CC) $(FLAGS) -c $< -o $(<:.c=.o) -I ./
 
 valgrind: all
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes -s -q ./pipex ./file_1.txt "sort" "grep pipex" "wc -l" ./file_2.txt
-	# valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes \
-	#  --trace-children=yes -s -q ./pipex ./file_1.txt "cat" "" ./file_2.txt
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes -s ./pipex ./file_1.txt "sort" "tr a-z A-Z" "grep PIPEX" ./file_2.txt
+
+bonus: all
 
 # bonus: all
 
